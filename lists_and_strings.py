@@ -2,25 +2,25 @@ from typing import Optional             # gain access to the Optional[X] type hi
 
 
 def checked_access(L:list[int], idx:int) -> Optional[int]:
-    test = idx >= 0 and idx < len(L)    # What is the value of test on each call?
-    if test:                            # What is this check preventing?
+    test = idx >= 0 and idx < len(L)    # first call: false, second call: true
+    if test:                            # this is checking if the idx is within the range of L
         return L[idx]
     else:
         return None
 
 
-first = checked_access([1, 0, 1], 9)     # What is the value of first?
-second = checked_access([1, 0, 1], 2)    # What is the value of second?
+first = checked_access([1, 0, 1], 9)     # none
+second = checked_access([1, 0, 1], 2)    # 1
 print()
 
 def length_sum(L:list[str]) -> int:
     if len(L) > 2:
-        result = len(L[0]) + len(L[1]) + len(L[2])    # For which call below is this statement evaluated
-    elif len(L) > 1:                                  #   and what are the values being added?
-        result = len(L[0]) + len(L[1])                # For which call below is this statement evaluated
-    elif len(L) > 0:                                  #   and what are the values being added?
-        result = len(L[0])                            # For which call below is this statement evaluated
-    else:                                             # and what are the values being added?
+        result = len(L[0]) + len(L[1]) + len(L[2])    # the first call
+    elif len(L) > 1:                                  #   4 + 2 + 3 = 9
+        result = len(L[0]) + len(L[1])                # the third call
+    elif len(L) > 0:                                  #  7 + 4 = 11
+        result = len(L[0])                            # the second
+    else:                                             # 11
         result = 0
     return result
 
@@ -38,8 +38,12 @@ def surprising(L:list[str], other:str) -> list[str]:
 words = ["this", "is", "confusing", "code."]
 first = surprising(words, "Avoid")
 second = surprising(words, "such.")
-         # What is the value of words at this point?
+         # ["this", "is", "confusing", "code.", "avoid", "such."]
          # What are the values of first and second at this point?
-         # What happened?
+         # first:  ["this", "is", "confusing", "code.", "avoid"]
+         # second:  ["this", "is", "confusing", "code.", "avoid", "such."]
+         # first got the initial contents of words and added avoid at the end
+         # second got the contents of words after the first call, and added "such." at the end
+
 print()
 
